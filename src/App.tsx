@@ -2,7 +2,7 @@
 // Update 2025-08-21b: Further compaction. Smaller cards, tighter spacing, fixed heights,
 // cleaned AUTO layout (no descriptive text), and MANUAL switches converted to single toggles.
 
-import React, { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 const MODES = ["OFF", "MANUAL", "SEMI", "AUTO"] as const;
 type Mode = typeof MODES[number];
@@ -118,7 +118,7 @@ export default function CageMonitorApp() {
 
   function toggleBowl(id: number) {
     updateCage(id, (c) => {
-      const to = c.bowl === "IN" ? "OUT" : "IN";
+      const to: Bowl = c.bowl === "IN" ? "OUT" : "IN";
       const next = { ...c, bowl: to };
       if (to === "OUT") next.valveOpen = false; // interlock
       return next;
@@ -338,7 +338,6 @@ function CageCard({
   toggleStir,
   toggleValve,
   toggleSelected,
-  setLevel,
   setAutoSettings,
 }: {
   cage: Cage;
