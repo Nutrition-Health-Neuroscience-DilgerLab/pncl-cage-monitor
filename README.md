@@ -1,69 +1,127 @@
-# React + TypeScript + Vite
+# PNCL Cage Monitor – Phase 2 (Draft)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend prototype for the PNCL feeding system **cage monitor**. Built with **React + TypeScript (Vite)** and **Tailwind CSS v4**.
 
-Currently, two official plugins are available:
+> 48 cages organized into 8 feeding stations (6 cages per station) with group controls, compact layout for 1920×1080.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Node.js 18+ (tested on Node 22)**  
+- **npm** (comes with Node). Yarn/pnpm also work if you prefer.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Check versions:
+```bash
+node -v
+npm -v
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Get the code
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Option A — Clone from your repository (recommended)
+```bash
+# Replace with your actual repo URL
+git clone https://github.com/<your-username>/pncl-cage-monitor.git
+cd pncl-cage-monitor
 ```
+
+### Option B — Starting from this folder (local checkout)
+If you already have these files locally, just `cd` into the project:
+```bash
+cd pncl-cage-monitor
+```
+
+---
+
+## Install dependencies
+
+```bash
+npm install
+```
+
+This installs React, Vite, TypeScript and Tailwind v4 (via `@tailwindcss/postcss`).
+
+---
+
+## Run the app (development)
+
+```bash
+npm run dev
+```
+
+Open the URL printed by Vite (usually `http://localhost:5173`).  
+Hot-reload is enabled; edits to `src/App.tsx` will refresh automatically.
+
+---
+
+## Build for production
+
+```bash
+npm run build
+```
+
+This produces an optimized build in `dist/`.
+
+Preview the production build locally:
+```bash
+npm run preview
+```
+
+---
+
+## Project Structure (important bits)
+
+```
+pncl-cage-monitor/
+├── index.html
+├── package.json
+├── postcss.config.js           # Tailwind v4 plugin (@tailwindcss/postcss)
+├── tailwind.config.js          # Tailwind content globs
+├── tsconfig.json
+├── vite.config.ts
+└── src/
+    ├── App.tsx                 # Main UI – stations, cages, group panel
+    ├── main.tsx                # React root
+    └── index.css               # Tailwind v4 entry: @import "tailwindcss"
+```
+
+**Tailwind v4 note:** styles are enabled via PostCSS plugin:
+```js
+// postcss.config.js
+export default {
+  plugins: {
+    "@tailwindcss/postcss": {},
+  },
+};
+```
+and a single import in `src/index.css`:
+```css
+@import "tailwindcss";
+```
+
+---
+
+## Configuration
+
+- **BrainBox links** (station headers): edit in `StationCard` component (`src/App.tsx`) and replace `href="#brainbox1"`/`"#brainbox2"` with your URLs. Add `target="_blank" rel="noopener noreferrer"` if you want them to open in new tabs.
+- **Compactness**: global font-size is controlled on the root `<div>` (class `text-[11px]`). Decrease to `text-[10px]` for an ultra-compact fit.
+
+---
+
+## Common issues / fixes
+
+- **Tailwind overlay about using `tailwindcss` directly**: ensure `postcss.config.js` uses `@tailwindcss/postcss` (Tailwind v4) as shown above.
+- **npx errors with Tailwind init (Node 22)**: not needed here; config files are already included.
+
+---
+
+## Scripts
+
+- `npm run dev` – start Vite dev server
+- `npm run build` – production build to `dist/`
+- `npm run preview` – preview the production build
+
+
